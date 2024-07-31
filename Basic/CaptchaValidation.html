@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTCHA Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .captcha {
+            font-size: 24px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .validation {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CAPTCHA Generator</h1>
+        <div id="captcha" class="captcha" onclick="generateCaptcha()">Click to Generate CAPTCHA</div>
+        <div class="input-group">
+            <label for="captchaInput">Enter CAPTCHA:</label>
+            <input type="text" id="captchaInput" placeholder="Enter CAPTCHA here">
+        </div>
+        <button onclick="validateCaptcha()">Submit</button>
+        <div id="validationMessage" class="validation"></div>
+    </div>
+    <script>
+        let currentCaptcha = '';
+
+        function generateCaptcha() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            currentCaptcha = '';
+            for (let i = 0; i < 6; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                currentCaptcha += characters[randomIndex];
+            }
+            document.getElementById('captcha').textContent = currentCaptcha;
+        }
+
+        function validateCaptcha() {
+            const userInput = document.getElementById('captchaInput').value;
+            const validationMessage = document.getElementById('validationMessage');
+            if (userInput === currentCaptcha) {
+                validationMessage.textContent = 'CAPTCHA validated successfully!';
+                validationMessage.style.color = 'green';
+            } else {
+                validationMessage.textContent = 'Incorrect CAPTCHA. Please try again.';
+                validationMessage.style.color = 'red';
+            }
+        }
+
+        // Generate initial CAPTCHA on page load
+        generateCaptcha();
+    </script>
+</body>
+</html>
